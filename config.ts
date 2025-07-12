@@ -1,3 +1,5 @@
+import { i18n } from "./i18n";
+
 interface PandocCrossrefSetting {
     pandocCrossrefConfigName: string;
     name: string;
@@ -40,50 +42,50 @@ const DEFAULT_SETTINGS: PluginSettings = {
     pandocCrossrefConfig: [
         {
             pandocCrossrefConfigName: "figureTitle",
-            name: "图注前缀",
-            description: "要添加到图表标题前面的单词，例如 Figure 1： Description",
-            value: "图",
+            name: i18n.t("pandocConfig.figureTitle.name"),
+            description: i18n.t("pandocConfig.figureTitle.description"),
+            value: i18n.t("defaultPrefixes.figure"),
         },
         {
             pandocCrossrefConfigName: "tableTitle",
-            name: "表注前缀",
-            description: "要添加到表格标题前面的单词，例如 Table 1： Description",
-            value: "表",
+            name: i18n.t("pandocConfig.tableTitle.name"),
+            description: i18n.t("pandocConfig.tableTitle.description"),
+            value: i18n.t("defaultPrefixes.table"),
         },
         {
             pandocCrossrefConfigName: "subfigGrid",
-            name: "用表格排版子图",
-            description: "默认为 false。如果为 true，则在表中排版子图。对于 LaTeX 输出而被忽略。",
+            name: i18n.t("pandocConfig.subfigGrid.name"),
+            description: i18n.t("pandocConfig.subfigGrid.description"),
             value: false,
         },
         {
             pandocCrossrefConfigName: "figPrefix",
-            name: "引用图前缀",
-            description: "引用图的前缀，例如图 1-3",
-            value: ["图"],
+            name: i18n.t("pandocConfig.figPrefix.name"),
+            description: i18n.t("pandocConfig.figPrefix.description"),
+            value: [i18n.t("defaultPrefixes.figure")],
         },
         {
             pandocCrossrefConfigName: "eqnPrefix",
-            name: "引用公式前缀",
-            description: "式引用的前缀，例如式 3,4",
-            value: ["式"],
+            name: i18n.t("pandocConfig.eqnPrefix.name"),
+            description: i18n.t("pandocConfig.eqnPrefix.description"),
+            value: [i18n.t("defaultPrefixes.equation")],
         },
         {
             pandocCrossrefConfigName: "tblPrefix",
-            name: "引用表前缀",
-            description: "表引用的前缀，例如表 2",
-            value: ["表"],
+            name: i18n.t("pandocConfig.tblPrefix.name"),
+            description: i18n.t("pandocConfig.tblPrefix.description"),
+            value: [i18n.t("defaultPrefixes.table")],
         },
         {
             pandocCrossrefConfigName: "linkReferences",
-            name: "链接到被引用元素",
-            description: "默认 false：创建指向被引用元素的引用超链接",
+            name: i18n.t("pandocConfig.linkReferences.name"),
+            description: i18n.t("pandocConfig.linkReferences.description"),
             value: false,
         },
         {
             pandocCrossrefConfigName: "nameInLink",
-            name: "将标题包含在链接中",
-            description: "对于单元素引用，将 prefix 包含在超链接中（使用“链接到被引用元素”时）",
+            name: i18n.t("pandocConfig.nameInLink.name"),
+            description: i18n.t("pandocConfig.nameInLink.description"),
             value: false,
         },
     ],

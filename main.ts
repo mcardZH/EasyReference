@@ -6,6 +6,7 @@ import {ImageEventListener} from "listener/image";
 import { ReferenceSuggest } from "suggest";
 import { TableListener } from "listener/table";
 import * as yaml from "js-yaml";
+import { i18n } from "i18n";
 
 
 export default class EasyReferencePlugin extends Plugin {
@@ -27,7 +28,7 @@ export default class EasyReferencePlugin extends Plugin {
 		this.addCommand({
 			id: "easy-reference-update-frontmatter",
 			repeatable: false,
-			name: "更新frontmatter",
+			name: i18n.t("commands.updateFrontmatter"),
 			editorCallback(editor, ctx) {
 
 				//@ts-ignore

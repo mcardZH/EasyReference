@@ -1,94 +1,240 @@
-# Obsidian Sample Plugin
+# Easy Reference
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+A comprehensive Obsidian plugin that provides automatic referencing for figures, tables, and sections with pandoc-crossref compatibility.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## Features
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+- **Automatic Figure Referencing**: Automatically adds figure labels and references in pandoc-crossref format
+- **Table Referencing**: Smart table detection and automatic label generation
+- **Section Referencing**: Reference headings and sections with auto-generated IDs
+- **Intelligent Suggestions**: Auto-completion system for cross-references
+- **Pandoc Compatibility**: Full support for pandoc-crossref syntax and configuration
+- **Flexible Configuration**: Customizable reference styles and formats
+- **Image Processing**: Supports both Wiki-style and Markdown image links
+- **Multi-format Export**: Seamless integration with pandoc toolchain for various output formats
 
-## First time developing plugins?
+## Installation
 
-Quick starting guide for new plugin devs:
+### From Obsidian Community Plugins
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+1. Open Obsidian Settings
+2. Navigate to Community Plugins
+3. Search for "Easy Reference"
+4. Install and enable the plugin
 
-## Releasing new releases
+### Manual Installation
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+1. Download the latest release from the [releases page](https://github.com/mcardZH/EasyReference/releases)
+2. Extract the files to your vault's `.obsidian/plugins/easy-reference/` directory
+3. Enable the plugin in Obsidian settings
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+## Dependencies
 
-## Adding your plugin to the community plugin list
+This plugin works best with the following tools:
+- **pandoc**: For document conversion
+- **pandoc-crossref**: For cross-reference processing
+- **Enhancing Export** (recommended): For enhanced export functionality
+- **Image Converter** (optional): For image processing workflow
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+## Usage
 
-## How to use
+### Basic Setup
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+1. Install the required dependencies (pandoc and pandoc-crossref)
+2. Enable the plugin in Obsidian
+3. Configure your reference styles in the plugin settings
 
-## Manually installing the plugin
+### Figure References
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+The plugin automatically processes images and adds figure labels:
 
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+```markdown
+![Figure description](image.png){#fig:fig123}
 ```
 
-If you have multiple URLs, you can also do:
-
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
+You can then reference this figure using:
+```markdown
+See [@fig:fig123] for details.
 ```
 
-## API Documentation
+![](imgs/img1.png)
+![](imgs/img2.png)
 
-See https://github.com/obsidianmd/obsidian-api
+
+### Table References
+
+When you create a table, the plugin automatically adds a caption with reference:
+
+```markdown
+| Column 1 | Column 2 |
+|----------|----------|
+| Data 1   | Data 2   |
+
+: Table caption {#tbl:tbl123}
+```
+
+Reference the table with:
+```markdown
+Refer to [@tbl:tbl123] for the data.
+```
+
+![](imgs/img3.png)
+
+### Section References
+
+Add reference labels to your headings:
+
+```markdown
+# Introduction {#sec:intro}
+
+## Methodology {#sec:method}
+```
+
+Reference sections with:
+```markdown
+As discussed in [@sec:intro], we will explore...
+```
+
+![](imgs/img4.png)
+
+### Auto-completion
+
+The plugin provides intelligent suggestions when typing references:
+
+1. Type `[@` to trigger the suggestion system
+2. Type the reference type (`fig`, `tbl`, `sec`)
+3. Type `:` followed by partial ID
+4. Select from the suggested references
+
+### Configuration
+
+#### Reference Styles
+
+Customize your reference formats in the plugin settings:
+
+- **Figure Reference Style**: `fig{tag:3}` (generates random 3-character IDs)
+- **Table Reference Style**: `tbl{tag:3}`
+- **Section Reference Style**: `sec{tag:3}`
+
+#### Pandoc-Crossref Settings
+
+Configure pandoc-crossref options directly in the plugin:
+
+- **Figure Title**: Prefix for figure captions (e.g., "Figure")
+- **Table Title**: Prefix for table captions (e.g., "Table")
+- **Reference Prefixes**: Customize how references appear in text
+- **Link References**: Enable hyperlinks to referenced elements
+
+#### Auto-generation Settings
+
+- **Auto-add Figure References**: Automatically add labels to all images
+- **Auto-add Table References**: Automatically add labels to all tables
+- **Markdown Link Style**: Convert Wiki-style links to Markdown format
+- **Relative Paths**: Use simplified file paths for images
+
+### Advanced Features
+
+#### Frontmatter Configuration
+
+Control plugin behavior per document using frontmatter:
+
+```yaml
+---
+autoAddFigRef: true
+autoAddTblRef: true
+figureTitle: "图"
+tableTitle: "表"
+---
+```
+
+#### Update Frontmatter Command
+
+Use the "Update Frontmatter" command to automatically add pandoc-crossref configuration to your document's frontmatter.
+
+#### Sub-figure Support
+
+The plugin supports sub-figures with special formatting:
+
+```markdown
+<div id="fig:subfig">
+![Sub-figure A](image1.png){#fig:subfig-a}
+![Sub-figure B](image2.png){#fig:subfig-b}
+</div>
+```
+
+### Integration with Export Workflow
+
+1. Configure your reference styles in the plugin
+2. Use the "Update Frontmatter" command to add pandoc-crossref settings
+3. Export your document using Enhanced Export or pandoc directly
+4. The plugin's configuration will be applied during the export process
+
+## Settings
+
+### Reference Formatting
+
+- **Figure Reference Style**: Template for figure ID generation
+- **Table Reference Style**: Template for table ID generation
+- **Section Reference Style**: Template for section ID generation
+
+### Automation
+
+- **Auto-add Figure References**: Enable/disable automatic figure labeling
+- **Auto-add Table References**: Enable/disable automatic table labeling
+- **Markdown Link Style**: Convert Wiki links to Markdown format
+- **Image Name Format**: Template for saved image names
+
+### Pandoc Integration
+
+- **Figure Title**: Caption prefix for figures
+- **Table Title**: Caption prefix for tables
+- **Reference Prefixes**: How references appear in text
+- **Link References**: Create hyperlinks to referenced elements
+
+## Variables
+
+The plugin supports several variables for customization:
+
+- `{filename}`: Current file name without extension
+- `{index}`: Auto-incrementing number to avoid duplicates
+- `{ext}`: File extension
+- `{tag:n}`: Random n-character alphanumeric string
+
+## Troubleshooting
+
+### Common Issues
+
+1. **References not working**: Ensure pandoc-crossref is installed and configured
+2. **Images not converting**: Check if "Markdown Link Style" is enabled
+3. **Auto-references not appearing**: Verify auto-add settings are enabled
+4. **Export issues**: Confirm frontmatter is updated with correct configuration
+
+### Compatibility
+
+- Works with Image Converter plugin for enhanced image processing
+- Compatible with Enhanced Export for improved export functionality
+- Requires pandoc and pandoc-crossref for full functionality
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+**mcardZH** - [GitHub Profile](https://github.com/mcardZH/)
+
+## Support
+
+If you find this plugin helpful, please consider:
+- ⭐ Starring the repository
+- 🐛 Reporting bugs or issues
+- 💡 Suggesting new features
+- 📝 Contributing to the documentation
+
+---
+
+*This plugin is designed to work seamlessly with pandoc and pandoc-crossref for academic and professional document preparation.*

@@ -1,5 +1,6 @@
 import EasyReferencePlugin from "main";
 import { App, Editor, EditorPosition, EditorSuggest, EditorSuggestContext, EditorSuggestTriggerInfo, MarkdownView, TFile } from "obsidian";
+import { i18n } from "i18n";
 
 
 export class Reference {
@@ -15,9 +16,9 @@ export class Reference {
 
 const availableTypes = ["fig", "tbl", "sec"];
 const typesTip = {
-    "fig": "图",
-    "tbl": "表",
-    "sec": "章节"
+    "fig": i18n.t("referenceTypes.fig"),
+    "tbl": i18n.t("referenceTypes.tbl"),
+    "sec": i18n.t("referenceTypes.sec")
 }
 const subFigNames = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
