@@ -43,12 +43,12 @@ jobs:
           main.js
           manifest.json
           styles.css
-        name: Release ${{ github.ref_name || github.event.inputs.version }}
-        tag_name: ${{ github.ref_name || github.event.inputs.version }}
+        name: Release ${{ github.event.inputs.version || github.ref_name }}
+        tag_name: ${{ github.event.inputs.version || github.ref_name }}
         body: |
           ## 发布说明
           
-          ### 版本 ${{ github.ref_name || github.event.inputs.version }}
+          ### 版本 ${{ github.event.inputs.version || github.ref_name }}
           
           这是 Easy Reference 插件的新版本发布。
           
