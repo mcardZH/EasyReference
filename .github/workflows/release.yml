@@ -1,0 +1,66 @@
+name: Release Obsidian Plugin
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.1)'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build plugin
+      run: npm run build
+
+    - name: Verify build outputs
+      run: |
+        ls -la main.js manifest.json styles.css
+        echo "Build completed successfully"
+
+    - name: Create release
+      uses: softprops/action-gh-release@v0.1.15
+      with:
+        files: |
+          main.js
+          manifest.json
+          styles.css
+        name: Release ${{ github.ref_name || github.event.inputs.version }}
+        tag_name: ${{ github.ref_name || github.event.inputs.version }}
+        body: |
+          ## 发布说明
+          
+          ### 版本 ${{ github.ref_name || github.event.inputs.version }}
+          
+          这是 Easy Reference 插件的新版本发布。
+          
+          ### 安装方法
+          1. 下载 `main.js`、`manifest.json` 和 `styles.css` 文件
+          2. 在 Obsidian 的插件文件夹中创建 `easy-reference` 文件夹
+          3. 将下载的文件放入该文件夹
+          4. 在 Obsidian 设置中启用插件
+          
+          ### 更新内容
+          请查看提交历史了解详细更改内容。
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
